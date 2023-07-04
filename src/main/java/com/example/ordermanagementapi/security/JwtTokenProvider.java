@@ -30,7 +30,12 @@ application.properties file*/
     application.properties file*/
     @Value("${app.jwt-expiration-milliseconds}")
     private int jwtExpirationInMilliseconds;
-
+    /**
+     * Generates a JWT token for the provided authentication.
+     *
+     * @param authentication The authentication object.
+     * @return The generated JWT token.
+     */
     // generate token
     public String generateToken(Authentication authentication){
         String username = authentication.getName();
@@ -46,6 +51,13 @@ application.properties file*/
         return token;
     }
 
+
+    /**
+     * Retrieves the username from the provided JWT token.
+     *
+     * @param token The JWT token.
+     * @return The username extracted from the token.
+     */
     // get username from the token received from the client
     public String getUsernameFromJWT(String token){
         Claims claims = Jwts.parser()
@@ -54,7 +66,13 @@ application.properties file*/
                 .getBody();
         return claims.getSubject();
     }
-
+    /**
+     * Validates the provided JWT token.
+     *
+     * @param token The JWT token to validate.
+     * @return True if the token is valid, false otherwise.
+     * @throws OrderManagementAPIException If the token is invalid or expired.
+     */
     // validate JWT token
     public boolean validateToken(String token){
         try{

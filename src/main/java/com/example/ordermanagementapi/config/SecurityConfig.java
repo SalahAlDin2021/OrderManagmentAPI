@@ -36,6 +36,9 @@ public class SecurityConfig {
     private final AuthenticationProvider authenticationProvider;
     private final LogoutHandler logoutHandler;
 
+
+    // Defines the SecurityFilterChain bean to configure security for HTTP requests
+    //this filter determines which urls are enabled without auth and others need auth.
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http

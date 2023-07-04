@@ -19,6 +19,15 @@ import java.io.IOException;
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
+    /**
+     * This method is called when an unauthenticated user tries to access a protected resource.
+     * It handles the entry point for JWT authentication by sending an HTTP 401 Unauthorized error.
+     *
+     * @param httpServletRequest  The HTTP servlet request.
+     * @param httpServletResponse The HTTP servlet response.
+     * @param e                   The authentication exception (not used in this implementation).
+     * @throws IOException Signals an error while writing to the response.
+     */
     @Override
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException {
         httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");

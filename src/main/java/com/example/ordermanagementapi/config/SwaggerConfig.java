@@ -24,7 +24,11 @@ import java.util.Collections;
 public class SwaggerConfig {
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
-
+    /**
+     * Customizes the OpenAPI configuration for Swagger.
+     *
+     * @return The customized OpenAPI configuration.
+     */
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
@@ -41,7 +45,11 @@ public class SwaggerConfig {
                 .addSecurityItem(
                         new SecurityRequirement().addList(AUTHORIZATION_HEADER, Collections.singletonList("global")));
     }
-
+    /**
+     * Provides the API information for Swagger.
+     *
+     * @return The API information.
+     */
     private Info apiInfo() {
         return new Info()
                 .title("Spring Boot Order Management System REST APIs")

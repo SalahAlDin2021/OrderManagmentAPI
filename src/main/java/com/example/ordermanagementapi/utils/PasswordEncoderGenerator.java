@@ -11,6 +11,9 @@ package com.example.ordermanagementapi.utils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+//this application used for encode password if you need
+//for example, if you need to add admin using database
+//, you need to generate password for admin using this(not set the password as plain text)
 public class PasswordEncoderGenerator {
     public static void main(String[] args) {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();

@@ -33,11 +33,13 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class ApplicationConfig {
     private final UserRepository userRepository;
+    // Defines the UserDetailsService bean which retrieves user details from the UserRepository
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
+    // Defines the AuthenticationProvider bean for authentication and authorization
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -45,11 +47,14 @@ public class ApplicationConfig {
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
+
+    // Defines the AuthenticationManager bean for handling authentication requests
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
 
+    // Defines the PasswordEncoder bean for encoding passwords
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

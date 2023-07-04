@@ -52,6 +52,7 @@ public class AuthController {
 
     private final JwtTokenProvider tokenProvider;
 
+    // REST API to authenticate any type user
     @Operation(summary = "Authenticate user", description = "REST API to Register or Signup user to Blog app")
     @PostMapping("/signin")
     public ResponseEntity<JWTAuthResponse> authenticateUser(@RequestBody LoginDto loginDto){
@@ -60,10 +61,12 @@ public class AuthController {
             throw new IllegalArgumentException("Username or email cannot be empty");
         }
         System.out.println("get authentication");
+        // Find the user by username or email
         User user = userRepository.findByUsernameOrEmail(loginDto.getUsernameOrEmail(), loginDto.getUsernameOrEmail())
                 .orElseThrow(() -> new UsernameNotFoundException("Invalid username or email"));
 
         System.out.println("invalid username or email");
+        // Perform authentication
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         user.getUsername(), loginDto.getPassword()));
@@ -74,10 +77,12 @@ public class AuthController {
         System.out.println("get authentication complete");
 
         System.out.println("SecurityContextHolder.getContext().setAuthentication(authentication);");
+        // Set the authentication in the SecurityContextHolder
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         System.out.println("ends:SecurityContextHolder.getContext().setAuthentication(authentication);");
         System.out.println("\nget token form tokenProvider");
+        // Generate token using the token provider
         // get token form tokenProvider
         String token = tokenProvider.generateToken(authentication);
         token = "Bearer "+token;
@@ -85,6 +90,7 @@ public class AuthController {
         return ResponseEntity.ok(new JWTAuthResponse(token));
     }
 
+    // REST API to register a customer user
     @Operation(summary = "Register user", description = "REST API to Signin or Login user to Blog app")
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser
