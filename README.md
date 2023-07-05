@@ -29,7 +29,7 @@ This project is a web service developed using Spring Boot. It aims to create a b
 
 ## API Endpoints
 
-- 'api/v1/customers`
+- 'api/v1/customers'
 - 'api/v1/customers/<customer_id>'
 - 'api/v1/customers/<customer_id>/orders'
 - 'api/v1/customers/<customer_id>/orders/<order_id>'
@@ -39,3 +39,15 @@ This project is a web service developed using Spring Boot. It aims to create a b
 - 'api/v1/products/<product_id>'
 - 'api/v1/products/<product_id>/stocks'
 - 'api/v1/products/<product_id>/stocks/<stock_id>'
+
+## Setup the Application
+
+- create a database named "order_managment_system", and update "application.proporties" with your database name and password
+- Build the application
+  - mvn clean
+  - mvn install -DskipTests
+- Build the docker image
+  - docker build -t order_management .
+- run the docker image
+  -  docker run -p 8080:8080 -e SPRING_DATASOURCE_URL="jdbc:mysql://host.docker.internal:3306/order_managment_system?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&zeroDateTimeBehavior=convertToNull" -e SPRING_DATASOURCE_USERNAME=<your_username> -e SPRING_DATASOURCE_PASSWORD=<your_password> my-spring-app
+  -  or you can use docker-compose.yml, which contain both mysql image and application image, then run "docker-compose up", which run the mysql in docker
